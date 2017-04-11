@@ -1,0 +1,19 @@
+/* =============================================================================
+   Utility
+============================================================================= */
+.clearfix {
+  @include clearfix;
+}
+@media only screen and (min-width: 768px){
+  .item-sp-only {
+    display: none !important;
+  }
+}
+@media only screen and (max-width: 767px){
+  .item-pc-only {
+    display: none !important;
+  }
+}
+.disp-none {
+  display: none;
+}

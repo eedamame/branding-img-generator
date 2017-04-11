@@ -1,0 +1,3 @@
+# nodejs
+source ~/.nvm/nvm.sh
+nvm use $(cat .nvmrc)

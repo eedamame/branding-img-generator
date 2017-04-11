@@ -1,0 +1,12 @@
+{
+  "rules": {
+    "color-hex-case": "lower",
+    "number-leading-zero": "never",
+    "number-no-trailing-zeros": true,
+    "function-url-quotes": "always",
+    "block-no-empty": true,
+    "selector-no-id": true,
+    "no-eol-whitespace": true
+  },
+  defaultSeverity: "warning"
+}
