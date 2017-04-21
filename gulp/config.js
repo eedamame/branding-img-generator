@@ -34,15 +34,15 @@ module.exports = {
   },
   sass: {
     src: src + "/sass/*.{sass,scss}",
-    dest: dest + "/css"
+    dest: "./assets/css"
   },
   images: {
     src: src + "/images/**",
     dest: dest + "/images"
   },
   js: {
-    src: [src + "/js/app.js"],
-    dest: dest + "/js"
+    src: src + "/js/*.js",
+    dest: "./assets/js"
   },
   markup: {
     src: src + "/htdocs/**",

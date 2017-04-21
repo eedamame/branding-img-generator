@@ -17,83 +17,72 @@
     &--item {
       position: absolute;
       width: 100%;
+        transform-origin: top left;
+        //background: #000;
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-position: center;
+        background-blend-mode: multiply;
+        opacity: .9;
       img {
         opacity: 0;
       }
       // レターパッド
       &:nth-child(1) {
-        top: 14%;
-        left: 36%;
-        width: 12%;
-        transform: skew(-16deg, 0) rotate(13deg) scaleY(.8);
-        transform-origin: top left;
-        background: #fff url('../images/logo.png') no-repeat 0 0;
-        background-size: contain;
-        background-blend-mode: multiply;
-        opacity: .9;
+        top: 13%;
+        left: 36.5%;
+        width: 19%;
+        height: 10%;
+        transform: skew(-21deg, 0) rotate(11.5deg) scaleY(.8);
       }
       // 封筒
       &:nth-child(2) {
-        top: 54%;
-        left: 14.7%;
+        top: 52.9%;
+        left: 15.3%;
         width: 4.5%;
-        transform: skew(-16deg, 0) rotate(13deg) scaleY(.85);
-        transform-origin: top left;
-        background: #f7fcff url('../images/logo.png') no-repeat 0 0;
-        background-size: contain;
-        background-blend-mode: multiply;
-        opacity: .9;
+        height: 4.5vw;
+        transform: skew(-20deg, 0) rotate(13deg) scaleY(.85);
       }
       // iPad
       &:nth-child(3) {
-        top: 31%;
-        left: 60.5%;
-        width: 3%;
-        transform: skew(-16deg, 0) rotate(13deg) scaleY(.85);
-        transform-origin: top left;
-        background: url('../images/logo.png') no-repeat 0 0;
-        background-size: contain;
-        background-blend-mode: multiply;
-        opacity: .9;
+        top: 28.6%;
+        left: 61%;
+        width: 3.8%;
+        height: 3.8vw;
+        transform: skew(-18deg, 0) rotate(12deg) scaleY(.85);
       }
       // iPhone
       &:nth-child(4) {
-        top: 60%;
-        left: 79.7%;
-        width: 7%;
-        transform: skew(-16deg, 0) rotate(13deg) scaleY(.85);
-        transform-origin: top left;
-        background: url('../images/logo.png') no-repeat 0 0;
-        background-size: contain;
-        background-blend-mode: multiply;
-        opacity: .9;
+        top: 56%;
+        left: 80.5%;
+        width: 7.5%;
+        height: 7.5vw;
+        transform: skew(-9.5deg, 0) rotate(15deg) scaleY(.85);
       }
       // business card
       &:nth-child(5) {
         top: 65.9%;
         left: 45.5%;
         width: 3.8%;
-        transform: skew(-16deg, 0) rotate(13deg) scaleY(.85);
-        transform-origin: top left;
-        background: url('../images/logo.png') no-repeat 0 0;
-        background-size: contain;
-        background-blend-mode: multiply;
-        opacity: .9;
+        height: 3.8vw;
+        transform: skew(-15deg, 0) rotate(14deg) scaleY(.85);
       }
       // eraser
       &:nth-child(6) {
-        top: 70%;
-        left: 60.5%;
-        width: 3.8%;
-        transform: skew(-16deg, 0) rotate(13deg) scaleY(.85);
-        transform-origin: top left;
-        background: url('../images/logo.png') no-repeat 0 0;
-        background-size: contain;
-        background-blend-mode: multiply;
-        opacity: .9;
+        top: 68.8%;
+        left: 60.4%;
+        width: 5%;
+        height: 2.5vw;
+        transform: skew(-13deg, 0) rotate(14deg) scaleY(.85);
       }
     }
   }
+}
+.text-photocopyright {
+  padding: .5em 0;
+  text-align: right;
+  font-size: 10px;
+  color: #666;
 }
 
 

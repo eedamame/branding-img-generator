@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>branding image generator</title>
+<link href="https://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+  <h1 class="global-title">branding-img-generator</h1>
+
+  <form action="/logoup" method="post" enctype="multipart/form-data">
+    <input type="file" name="logo">
+    <input type="submit">
+  </form>
+
+  <div class="area-brandingimage">
+    <img src="/images/baseimg_fb.jpg" alt="">
+    <ul class="area-brandingimage__logolist">
+      <li class="area-brandingimage__logolist--item" style="background-image: url(<%= logo.filename %>);"><img src="<%= logo.filename %>" alt=""></li>
+      <li class="area-brandingimage__logolist--item" style="background-image: url(<%= logo.filename %>);"><img src="<%= logo.filename %>" alt=""></li>
+      <li class="area-brandingimage__logolist--item" style="background-image: url(<%= logo.filename %>);"><img src="<%= logo.filename %>" alt=""></li>
+      <li class="area-brandingimage__logolist--item" style="background-image: url(<%= logo.filename %>);"><img src="<%= logo.filename %>" alt=""></li>
+      <li class="area-brandingimage__logolist--item" style="background-image: url(<%= logo.filename %>);"><img src="<%= logo.filename %>" alt=""></li>
+      <li class="area-brandingimage__logolist--item" style="background-image: url(<%= logo.filename %>);"><img src="<%= logo.filename %>" alt=""></li>
+    </ul>
+  </div>
+  <p class="text-photocopyright">base photo: <a href="http://graphicburger.com/branding-identity-mockup-vol-8/">http://graphicburger.com/branding-identity-mockup-vol-8/</a></p>
+
+</body>
+</html>

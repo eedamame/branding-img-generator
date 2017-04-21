@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>branding image generator</title>
+<link href="https://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+</head>
+<body>
+
+  <h1 class="global-title">branding-img-generator</h1>
+
+<p>初回アクセス</p>
+
+<div id="area-dropimage" class="area-dropimage">
+ここにロゴ画像をドロップ！
+</div>
+
+  <form id="logoform" class="logoform" name="logoform" action="/logoup" method="post" enctype="multipart/form-data">
+    <input type="file" name="logo" id="logoform__input--file">
+    <input type="submit">
+  </form>
+
+  <div class="area-brandingimage">
+    <img src="/images/baseimg_fb.jpg" alt="">
+    <ul class="area-brandingimage__logolist">
+      <li class="area-brandingimage__logolist--item" style="background-image: url(<%= logo.filename %>);"><img src="<%= logo.filename %>" alt=""></li>
+      <li class="area-brandingimage__logolist--item" style="background-image: url(<%= logo.filename %>);"><img src="<%= logo.filename %>" alt=""></li>
+      <li class="area-brandingimage__logolist--item" style="background-image: url(<%= logo.filename %>);"><img src="<%= logo.filename %>" alt=""></li>
+      <li class="area-brandingimage__logolist--item" style="background-image: url(<%= logo.filename %>);"><img src="<%= logo.filename %>" alt=""></li>
+      <li class="area-brandingimage__logolist--item" style="background-image: url(<%= logo.filename %>);"><img src="<%= logo.filename %>" alt=""></li>
+      <li class="area-brandingimage__logolist--item" style="background-image: url(<%= logo.filename %>);"><img src="<%= logo.filename %>" alt=""></li>
+    </ul>
+  </div>
+
+<script src="/js/app.js"></script>
+</body>
+</html>
