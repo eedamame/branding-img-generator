@@ -2,6 +2,7 @@
    DnDでのファイル読み込み
 ============================================================================= */
 const dropArea = document.getElementById('area-dropimage');
+const dropTxtIntro = document.getElementById('area-dropimage__text--intro');
 
 dropArea.addEventListener('dragover', function(e) {
   e.preventDefault();
@@ -36,8 +37,10 @@ function fileReader(files) {
     dropImg.setAttribute('src', reader.result);
 
     // 読み込んだら、サムネイルを表示
-    dropArea.innerHTML = '';
-    dropArea.appendChild(dropImg);
+    //dropArea.innerHTML = '';
+    //dropArea.appendChild(dropImg);
+    dropTxtIntro.innerHTML = '';
+    dropTxtIntro.appendChild(dropImg);
 
     const logoform = document.getElementById('logoform');
 
