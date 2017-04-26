@@ -1,11 +1,43 @@
 /* =============================================================================
+   タイトル
+============================================================================= */
+.global-title {
+  margin: 0;
+  padding: 2rem;
+  height: 7rem;
+  background-color: #191919;
+  color: #fff;
+  text-align: center;
+  font-family: 'PT Sans', sans-serif;
+  font-weight: 500;
+  box-sizing: border-box;
+  a {
+    color: #fff;
+    text-decoration: none;
+  }
+}
+
+
+/* =============================================================================
+   page body
+============================================================================= */
+.page-content {
+  margin: 0;
+  padding-top: 1rem;
+  min-height: calc(100vh - 12rem);
+  box-sizing: border-box;
+}
+
+
+/* =============================================================================
    グローバルフッター
 ============================================================================= */
 .global-footer {
-  margin-top: 3rem;
   padding: 1rem;
   background-color: #f3f3f3;
   text-align: center;
+  height: 5rem;
+  box-sizing: border-box;
   p {
     margin: 0;
   }
