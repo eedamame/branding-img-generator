@@ -140,3 +140,15 @@
 @include media(mobile){
   // モバイル向け
 }
+
+
+.page-404 {
+  .page-content {
+    margin: 0 auto;
+    padding: 3rem 0;
+    width: 90%;
+    max-width: 900px;
+    min-height: 300px;
+    text-align: center;
+  }
+}
