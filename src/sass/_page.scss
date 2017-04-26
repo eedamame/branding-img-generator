@@ -18,7 +18,8 @@
     font-size: 2rem;
   }
   &__submit {
-    display: inline-block;
+    //display: inline-block;
+    display: none;
     margin: 2rem auto 0;
     padding: 1em;
     width: 10em;
@@ -26,9 +27,34 @@
     background-color: #191919;
     color: #fff;
     text-align: center;
+    &.area-dropimage__submit--inputfile {
+      display: inline-block;
+    }
+  }
+}
+
+
+.is-dropimage {
+  // 
+  .area-dropimage__text--intro,
+  .logoform__input--file {
+    display: none;
   }
 
+  // submit button
+  .area-dropimage__submit--inputfile {
+    display: none;
+  }
+  .area-dropimage__submit--dropimage {
+    display: inline-block;
+  }
 }
+
+
+
+
+
+
 
 .area-brandingimage {
   position: relative;
