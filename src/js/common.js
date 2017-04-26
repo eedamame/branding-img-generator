@@ -1,3 +1,4 @@
+require('es6-promise').polyfill();
 const axios = require('axios');
 
 // dropされた画像のアップロード
