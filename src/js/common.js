@@ -39,8 +39,10 @@ function fileReader(files) {
     // 読み込んだら、サムネイルを表示
     //dropArea.innerHTML = '';
     //dropArea.appendChild(dropImg);
-    dropTxtIntro.innerHTML = '';
-    dropTxtIntro.appendChild(dropImg);
+    
+    document.querySelector('body').classList.add('is-dropimage');
+    //dropTxtIntro.innerHTML = '';
+    document.getElementById('area-dropimage').appendChild(dropImg);
 
     const logoform = document.getElementById('logoform');
 
