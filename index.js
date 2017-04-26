@@ -7,6 +7,7 @@ const fs = require('fs');
 const glob = require('glob');
 const express = require('express');
 const multer = require('multer');
+const webshot = require('webshot');
 const _ = require('underscore');
 
 const upload = multer({ dest: 'assets/uploads'}).single('logo');
@@ -137,6 +138,27 @@ glob( targetFiles, function(err, files) {
         res.redirect('/logo/' + req.file.filename);
       }
     });
+  });
+
+
+  /* =============================================================================
+     スクリーンショット
+  ============================================================================= */
+  app.get('/ss/:id', function(req, res, next){
+    const locate = req.protocol + '://' + req.headers.host;
+    const options = {
+      renderDelay: 7000,
+      userAgent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36"
+    };
+    console.log('locate: ', locate);
+    webshot(locate + '/logo/' + req.params.id, 'ss.png', options,
+      function(err) {
+        if(err) {
+          console.log(err);
+        }
+        //res.attachment();
+      }
+    );
   });
 
 });
