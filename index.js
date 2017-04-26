@@ -68,16 +68,29 @@ app.get("/logo/:id", function(req, res, next){
 
 /* =============================================================================
    画像アップロード
+   formから
 ============================================================================= */
 app.post('/logoup', function (req, res) {
   upload(req, res, function(err) {
     if(err) {
       res.send("Failed to write " + req.file.destination + " with " + err);
     } else {
-      //res.send("uploaded " + req.file.originalname + " as " + req.file.filename + " Size: " + req.file.size);
-      //req.file.filename = '/uploads/' + req.file.filename;
-      //res.render("index", {logo: req.file});
       res.redirect('/logo/' + req.file.filename);
+    }
+  });
+});
+
+
+/* =============================================================================
+   画像アップロード
+   dropファイル
+============================================================================= */
+app.post('/droplogoup', function (req, res) {
+  upload(req, res, function(err) {
+    if(err) {
+      res.send("Failed to write " + req.file.destination + " with " + err);
+    } else {
+      res.send(req.file.filename);
     }
   });
 });

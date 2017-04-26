@@ -1,3 +1,9 @@
+const axios = require('axios');
+
+// dropされた画像のアップロード
+const logoFileInput = document.getElementById('logoform__input--file');
+const frm = new FormData();
+
 /* =============================================================================
    DnDでのファイル読み込み
 ============================================================================= */
@@ -46,9 +52,38 @@ function fileReader(files) {
 
     const logoform = document.getElementById('logoform');
 
-    // input type=file を削除
-    const logoFileInput = document.getElementById('logoform__input--file');
+    // input type=file に追加
     logoFileInput.files = files;
+    frm.append("logo", files[0]);
 
   }, false);
 }
+
+// dropされた画像のアップロード
+const uploadBtnDropImg = document.getElementById('area-dropimage__submit--dropimage');
+uploadBtnDropImg.addEventListener('click', function(e) {
+  //e.preventDefault();
+  axios.post('/droplogoup', frm)
+  .then(function(res){
+    console.log('axios res: ', res.data);
+    window.location.href = '/logo/' + res.data;
+  });
+}, false);
+
+
+//app.post('/logoup', function (req, res) {
+//  upload(req, res, function(err) {
+//    if(err) {
+//      res.send("Failed to write " + req.file.destination + " with " + err);
+//    } else {
+//      //res.send("uploaded " + req.file.originalname + " as " + req.file.filename + " Size: " + req.file.size);
+//      //req.file.filename = '/uploads/' + req.file.filename;
+//      //res.render("index", {logo: req.file});
+//      res.redirect('/logo/' + req.file.filename);
+//    }
+//  });
+//});
+
+
+
+
