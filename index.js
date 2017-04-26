@@ -10,6 +10,11 @@ const multer = require('multer');
 const webshot = require('webshot');
 const _ = require('underscore');
 
+// cron
+const exec = require('child_process').exec;
+const cronJob = require('cron').CronJob;
+
+
 const upload = multer({ dest: 'assets/uploads'}).single('logo');
 
 // server
@@ -19,146 +24,111 @@ const server = app.listen(3000, function() {
   console.log("check -> http://localhost:" + server.address().port);
 });
 
-let selectorList = []; // セレクタ情報突っ込む配列
-let numberingList = []; // 重複カウント含む配列
-let targetFileList = []; // 使用するcssファイル名を突っ込む配列
 
-const targetFiles = './precheckitem/*.css';
+/* =============================================================================
+   views
+============================================================================= */
 
-glob( targetFiles, function(err, files) {
-  files.forEach(function(file) {
-    const css = fs.readFileSync(file);
-    const root = postcss.parse(css);
-    targetFileList.push(file);
+// View EngineにEJSを指定。
+app.set('view engine', 'ejs');
+// assetsディレクトリ内を静的ファイルとして使用する
+app.use(express.static('assets'));
 
-    root.walk(function (rule) {
-      const slct = rule.selector;
-      if(slct) {
-        let ruleItem;
-        let thisAtRule = '';
-        if(rule.parent.type === 'atrule') {
-          thisAtRule = rule.parent.name + ' ' + rule.parent.params;// nameで、'media' とかが入る。params で、指定の内容が入る 'only screen and (min-width:768px)' とか
-        }
-        // 複数セレクタの場合は、分割する
-        if(slct.match(/,/)) {
-          const splitSelectors = slct.split(',');
-          for(let i = 0; i<splitSelectors.length; i++) {
-            ruleItem = {
-              'selector': splitSelectors[i].toString().trim(),
-              'line': rule.source.start.line,
-              'file': file,
-              'atrule': thisAtRule,
-              'repeatNum': 1
-            }
-            selectorList.push(ruleItem);
-          }
-        } else {
-          ruleItem = {
-            'selector': rule.selector.toString().trim(),
-            'line': rule.source.start.line,
-            'file': file,
-            'atrule': thisAtRule,
-            'repeatNum': 1
-          }
-          selectorList.push(ruleItem);
-        }
-      }
-    });
-  })
-
-  // セレクタ名でグルーピングしたオブジェクト
-  let groupBySelector = _.groupBy(selectorList, 'selector')
-
-  // ここでセレクタが重複するやつがあるかチェックして、repeatNumの値を調整する
-  selectorList.forEach(function(listitem) {
-    listitem.repeatNum = groupBySelector[listitem.selector].length;
-    numberingList.push(listitem);
+/* ----------------------------------------------
+   初回画面の表示
+---------------------------------------------- */
+app.get("/", function(req, res, next){
+  res.render("index", {logo:
+    {
+      filename: '/images/logo.png'
+    }
   });
-
-  let returnData = {
-    files: targetFileList,
-    selectors: numberingList
-  };
-
-
-  /* =============================================================================
-     API
-  ============================================================================= */
-
-  // セレクターリストを取得するAPI
-  app.get("/api/css/selector", function(req, res, next){
-      //res.json(selectorList);
-      res.json(returnData);
-  });
-
-
-  /* =============================================================================
-     views
-  ============================================================================= */
-
-  // View EngineにEJSを指定。
-  app.set('view engine', 'ejs');
-  // assetsディレクトリ内を静的ファイルとして使用する
-  app.use(express.static('assets'));
-
-  /* ----------------------------------------------
-     初回画面の表示
-  ---------------------------------------------- */
-  app.get("/", function(req, res, next){
-    res.render("index", {logo:
-      {
-        filename: '/images/logo.png'
-      }
-    });
-  });
-
-
-  /* ----------------------------------------------
-     アップ済の画像の参照
-  ---------------------------------------------- */
-  app.get("/logo/:id", function(req, res, next){
-    var logodata = {
-      filename : '/uploads/' + req.params.id
-    };
-    res.render("brandimage", {logo: logodata});
-  });
-
-
-  /* =============================================================================
-     画像アップロード
-  ============================================================================= */
-  app.post('/logoup', function (req, res) {
-    upload(req, res, function() {
-      if(err) {
-        res.send("Failed to write " + req.file.destination + " with " + err);
-      } else {
-        //res.send("uploaded " + req.file.originalname + " as " + req.file.filename + " Size: " + req.file.size);
-        //req.file.filename = '/uploads/' + req.file.filename;
-        //res.render("index", {logo: req.file});
-        res.redirect('/logo/' + req.file.filename);
-      }
-    });
-  });
-
-
-  /* =============================================================================
-     スクリーンショット
-  ============================================================================= */
-  app.get('/ss/:id', function(req, res, next){
-    const locate = req.protocol + '://' + req.headers.host;
-    const options = {
-      renderDelay: 7000,
-      userAgent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36"
-    };
-    console.log('locate: ', locate);
-    webshot(locate + '/logo/' + req.params.id, 'ss.png', options,
-      function(err) {
-        if(err) {
-          console.log(err);
-        }
-        //res.attachment();
-      }
-    );
-  });
-
 });
+
+
+/* ----------------------------------------------
+   アップ済の画像の参照
+---------------------------------------------- */
+app.get("/logo/:id", function(req, res, next){
+  var logodata = {
+    filename : '/uploads/' + req.params.id
+  };
+  res.render("brandimage", {logo: logodata});
+});
+
+
+/* =============================================================================
+   画像アップロード
+============================================================================= */
+app.post('/logoup', function (req, res) {
+  upload(req, res, function(err) {
+    if(err) {
+      res.send("Failed to write " + req.file.destination + " with " + err);
+    } else {
+      //res.send("uploaded " + req.file.originalname + " as " + req.file.filename + " Size: " + req.file.size);
+      //req.file.filename = '/uploads/' + req.file.filename;
+      //res.render("index", {logo: req.file});
+      res.redirect('/logo/' + req.file.filename);
+    }
+  });
+});
+
+
+/* =============================================================================
+   スクリーンショット
+============================================================================= */
+app.get('/ss/:id', function(req, res, next){
+  const locate = req.protocol + '://' + req.headers.host;
+  const options = {
+    renderDelay: 7000,
+    userAgent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36"
+  };
+  console.log('locate: ', locate);
+  webshot(locate + '/logo/' + req.params.id, 'ss.png', options,
+    function(err) {
+      if(err) {
+        console.log(err);
+      }
+      //res.attachment();
+    }
+  );
+});
+
+
+/* =============================================================================
+   一定期間後の画像ファイルを削除
+============================================================================= */
+const cronTime = '35 0 * * *';
+//const cronTime = '30 00 * * *';
+const deleteDays = 7; // ここに指定した日数より前にアップされた画像を削除する
+
+const job = new cronJob({
+  //実行したい日時 or crontab書式
+  cronTime: cronTime
+ 
+  //指定時に実行したい関数
+  , onTick: function() {
+    //console.log('onTick!');
+    exec('find ./assets/uploads/ -mtime +' + deleteDays + ' | xargs rm -rf', (err, stdout, stderr) => {
+      if (err) { console.log(err); }
+      console.log(stdout);
+    });
+  }
+ 
+  //ジョブの完了または停止時に実行する関数 
+  , onComplete: function() {
+    //console.log('onComplete!')
+  }
+ 
+  // コンストラクタを終する前にジョブを開始するかどうか
+  , start: false
+   
+  //タイムゾーン
+  , timeZone: "Asia/Tokyo"
+})
+
+//console.log('job status', job.running); // job status undefined
+
+job.start();
+
+//console.log('job status', job.running);
