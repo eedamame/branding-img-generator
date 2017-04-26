@@ -60,10 +60,10 @@ app.get("/logo/:id", function(req, res, next){
 /* ----------------------------------------------
    404
 ---------------------------------------------- */
-app.use(function(req, res, next) {
-  //res.status(404).send('Sorry cant find that!');
-  res.status(404).render("404");
-});
+//app.use(function(req, res, next) {
+//  //res.status(404).send('Sorry cant find that!');
+//  res.status(404).render("404");
+//});
 
 
 /* =============================================================================
